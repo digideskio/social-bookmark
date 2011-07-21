@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Django Bookmarks - {{username}}</title>
+    </head>
+    <body>
+        <h1> Bookmarks for {{username}} </h1>        
+        {% if bookmarks %}
+            <ul>
+                {% for bm in bookmarks %}
+                    <li><a href="{{bm.link.url}}">{{bm.title}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p> No bookmarks found!</p>
+        {% endif %}
+    </body>
+</html>
