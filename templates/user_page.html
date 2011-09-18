@@ -1,17 +1,15 @@
-<html>
-    <head>
-        <title>Django Bookmarks - {{username}}</title>
-    </head>
-    <body>
-        <h1> Bookmarks for {{username}} </h1>        
-        {% if bookmarks %}
-            <ul>
-                {% for bm in bookmarks %}
-                    <li><a href="{{bm.link.url}}">{{bm.title}}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p> No bookmarks found!</p>
-        {% endif %}
-    </body>
-</html>
+{% extends "base.html" %}
+{% block title %} Django Bookmarks - {{username}} {% endblock %}
+{% block head %} Welcome to Social Bookmarks {% endblock %}
+{% block content %}
+    <h1> Bookmarks for {{username}} </h1>        
+    {% if bookmarks %}
+        <ul>
+            {% for bm in bookmarks %}
+                <li><a href="{{bm.link.url}}">{{bm.title}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p> No bookmarks found!</p>
+    {% endif %}
+{% endblock %}
