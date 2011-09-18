@@ -6,6 +6,7 @@ from django.http import HttpResponse, Http404
 from django.template import Context
 from django.template.loader import get_template
 from django.contrib.auth.models import User
+from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 
 #generate the main page content
@@ -15,7 +16,7 @@ def main_page(request) :
 		'page_title': u'Welcome to Django Bookmarks',
 		'page_body': u'Where you can store and share bookmarks!'
 	})
-    c.update(csrf(request))
+    variables.update(csrf(request))
     return render_to_response( 'main_page.html',variables )
 
 # Context is a object which can take Python Dictionary elements in the constructor)
