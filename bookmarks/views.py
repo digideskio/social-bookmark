@@ -11,16 +11,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 from django.template import RequestContext
+from bookmarks.forms import *
 
 #generate the main page content
 def main_page(request) :
-    #variables = Context({
-	#	'head_title': u'Django Bookmarks',
-	#	'page_body': u'Where you can store and share bookmarks!',
-    #    'user': request.user
-	#})
-    
-	#variables.update(csrf(request))
     return render_to_response( 'main_page.html',RequestContext(request))
 
 # Context is a object which can take Python Dictionary elements in the constructor)
@@ -31,19 +25,24 @@ def user_page(request, username):
 		user = User.objects.get(username=username)
 	except User.DoesNotExist:
 		raise Http404(u'Requested user not found');
-
 	bookmarks = user.bookmark_set.all()
-
-
-	template = get_template('user_page.html')
-	variables = Context({ 
-		'username' : username,
-		'bookmarks': bookmarks 
-	})
-	
-	output = template.render(variables)
-	return HttpResponse(output)
+	variables = RequestContext({ 'username' : username,	'bookmarks': bookmarks })
+	return render_to_response('user_page.html', variables)
 
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
+	
+def register_page(request):
+	if request.method == 'POST':
+		form = RegistrationForm(request.POST)
+		if form.is_valid():
+			user = User.objects.create_user(
+				username = form.cleaned_data['username'],
+				password = form.cleaned_data['password1'],
+				email = form.cleaned_data['email'])
+			return HttpResponseRedirect('/')
+		else:
+			form = RegistrationForm()
+		variables = RequesetContext(request, {'form':form})
+		return render_to_response('registration/register.html',variables)
