@@ -10,17 +10,18 @@ from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
+from django.template import RequestContext
 
 #generate the main page content
 def main_page(request) :
-    variables = Context({
-		'head_title': u'Django Bookmarks',
-		'page_title': u'Welcome to Django Bookmarks',
-		'page_body': u'Where you can store and share bookmarks!',
-        'user': request.user
-	})
-    variables.update(csrf(request))
-    return render_to_response( 'main_page.html',variables )
+    #variables = Context({
+	#	'head_title': u'Django Bookmarks',
+	#	'page_body': u'Where you can store and share bookmarks!',
+    #    'user': request.user
+	#})
+    
+	#variables.update(csrf(request))
+    return render_to_response( 'main_page.html',RequestContext(request))
 
 # Context is a object which can take Python Dictionary elements in the constructor)
 
