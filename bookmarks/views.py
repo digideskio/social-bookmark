@@ -43,6 +43,8 @@ def register_page(request):
 				email = form.cleaned_data['email'])
 			return HttpResponseRedirect('/')
 		else:
-			form = RegistrationForm()
-		variables = RequesetContext(request, {'form':form})
+			print "Form is not valid"
+	else:
+		form = RegistrationForm()
+		variables = RequestContext(request, {'form':form})
 		return render_to_response('registration/register.html',variables)
