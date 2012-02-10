@@ -41,7 +41,7 @@ def register_page(request):
 				username = form.cleaned_data['username'],
 				password = form.cleaned_data['password1'],
 				email = form.cleaned_data['email'])
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/register/success/')
 		else:
 			print "Form is not valid"
 	else:
